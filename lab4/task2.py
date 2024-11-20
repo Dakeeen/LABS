@@ -7,13 +7,10 @@ OUTPUT_FILENAME = "output.json"
 
 
 def task() -> None:
-    data = []
-    with open(INPUT_FILENAME) as csvf:
-        csvReader = csv.DictReader(csvf)  # TODO считать содержимое csv файла
-        for row in csvReader:
-            data.append(dict(row))
-    with open(OUTPUT_FILENAME, 'w') as jsonf:
-        jsonString = json.dumps(data, indent=4)
+    with open(INPUT_FILENAME, encoding='utf-8') as csvf:  # TODO считать содержимое csv файла
+        data = [row for row in csv.DictReader(csvf)]
+    with open(OUTPUT_FILENAME, 'w', encoding='utf-8') as jsonf:
+        jsonString = json.dumps(data, indent=4, ensure_ascii=False)
         jsonf.write(jsonString)  # TODO Сериализовать в файл с отступами равными 4
 
 if __name__ == '__main__':
@@ -23,3 +20,4 @@ if __name__ == '__main__':
     with open(OUTPUT_FILENAME) as output_f:
         for line in output_f:
             print(line, end="")
+
